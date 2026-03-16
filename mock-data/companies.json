@@ -1,0 +1,107 @@
+[
+  {
+    "id": "company-01",
+    "name": "Nestl\u00e9",
+    "description": "The world's largest food and beverage company, headquartered in Vevey, Switzerland. Nestl\u00e9 operates in nutrition, health and wellness across 188 countries.",
+    "size": "10001+",
+    "domains": ["Consumer Goods", "Food & Beverage"]
+  },
+  {
+    "id": "company-02",
+    "name": "Roche",
+    "description": "A global pioneer in pharmaceuticals and diagnostics, based in Basel. Roche focuses on advancing science to improve people's lives through innovative medicines and diagnostic tests.",
+    "size": "10001+",
+    "domains": ["Pharma & Healthcare", "Biotechnology"]
+  },
+  {
+    "id": "company-03",
+    "name": "ABB",
+    "description": "A leading global technology company that energizes the transformation of society and industry. ABB operates in electrification, robotics, automation and motion from its headquarters in Zurich.",
+    "size": "10001+",
+    "domains": ["Industrial Technology", "Energy"]
+  },
+  {
+    "id": "company-04",
+    "name": "Swisscom",
+    "description": "Switzerland's leading telecommunications provider, offering mobile, internet, and IT services. Swisscom also drives digital transformation for enterprise customers.",
+    "size": "5001-10000",
+    "domains": ["Telecommunications", "IT Services"]
+  },
+  {
+    "id": "company-05",
+    "name": "SBB",
+    "description": "The Swiss Federal Railways, one of the densest and most punctual rail networks in the world. SBB transports over a million passengers daily and is a major logistics operator.",
+    "size": "10001+",
+    "domains": ["Transportation", "Logistics"]
+  },
+  {
+    "id": "company-06",
+    "name": "Swiss Re",
+    "description": "One of the world's leading reinsurers, headquartered in Zurich. Swiss Re provides risk knowledge and financial solutions to insurance companies, corporations and the public sector.",
+    "size": "5001-10000",
+    "domains": ["Insurance", "Financial Services"]
+  },
+  {
+    "id": "company-07",
+    "name": "Zurich Insurance",
+    "description": "A leading multi-line insurer serving customers in global and local markets. Zurich Insurance provides a range of property, casualty and life insurance products and services.",
+    "size": "10001+",
+    "domains": ["Insurance", "Financial Services"]
+  },
+  {
+    "id": "company-08",
+    "name": "Novartis",
+    "description": "A global healthcare company based in Basel, focused on innovative medicines. Novartis reimagines medicine to improve and extend people's lives through breakthrough treatments.",
+    "size": "10001+",
+    "domains": ["Pharma & Healthcare"]
+  },
+  {
+    "id": "company-09",
+    "name": "Logitech",
+    "description": "A Swiss-American technology company that designs and manufactures personal peripherals and workspace solutions. Logitech creates products that bring people together through video, music, gaming and computing.",
+    "size": "1001-5000",
+    "domains": ["Consumer Electronics", "Technology"]
+  },
+  {
+    "id": "company-10",
+    "name": "Hilti",
+    "description": "A global leader in providing technology-led solutions to the construction and energy industries. Hilti develops products, systems and services that offer innovative solutions to construction professionals.",
+    "size": "5001-10000",
+    "domains": ["Construction", "Industrial Technology"]
+  },
+  {
+    "id": "company-11",
+    "name": "Sonova",
+    "description": "A leading provider of innovative hearing care solutions, headquartered in St\u00e4fa, Switzerland. Sonova operates through its core brands Phonak, Unitron, and Advanced Bionics.",
+    "size": "1001-5000",
+    "domains": ["MedTech", "Healthcare"]
+  },
+  {
+    "id": "company-12",
+    "name": "B\u00fchler Group",
+    "description": "A global technology company specializing in food processing and advanced materials manufacturing. B\u00fchler develops solutions for turning grain into flour, cocoa into chocolate, and much more.",
+    "size": "5001-10000",
+    "domains": ["Food Processing", "Manufacturing"]
+  },
+  {
+    "id": "company-13",
+    "name": "On Running",
+    "description": "A Swiss performance sportswear company known for its innovative CloudTec running shoes. On blends Swiss engineering with a passion for an active lifestyle to create award-winning footwear and apparel.",
+    "size": "1001-5000",
+    "domains": ["Sportswear", "Consumer Goods"]
+  },
+  {
+    "id": "company-14",
+    "name": "Migros",
+    "description": "Switzerland's largest retail company and the country's biggest employer in the private sector. Migros operates supermarkets, department stores, restaurants, and a wide range of consumer services.",
+    "size": "10001+",
+    "domains": ["Retail", "Consumer Goods"]
+  },
+  {
+    "id": "company-15",
+    "name": "Stadler Rail",
+    "description": "An international rail vehicle manufacturer headquartered in Bussnang, Switzerland. Stadler Rail produces a wide range of rolling stock including high-speed trains, regional and suburban trains, and trams.",
+    "size": "5001-10000",
+    "domains": ["Manufacturing", "Transportation"]
+  }
+]

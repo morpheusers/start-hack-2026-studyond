@@ -1,0 +1,182 @@
+[
+  {
+    "id": "program-01",
+    "name": "MSc Computer Science",
+    "degree": "msc",
+    "universityId": "uni-01"
+  },
+  {
+    "id": "program-02",
+    "name": "MSc Mechanical Engineering",
+    "degree": "msc",
+    "universityId": "uni-01"
+  },
+  {
+    "id": "program-03",
+    "name": "BSc Electrical Engineering and Information Technology",
+    "degree": "bsc",
+    "universityId": "uni-01"
+  },
+  {
+    "id": "program-04",
+    "name": "MSc Data Science",
+    "degree": "msc",
+    "universityId": "uni-02"
+  },
+  {
+    "id": "program-05",
+    "name": "MSc Communication Systems",
+    "degree": "msc",
+    "universityId": "uni-02"
+  },
+  {
+    "id": "program-06",
+    "name": "PhD Computational and Quantitative Biology",
+    "degree": "phd",
+    "universityId": "uni-02"
+  },
+  {
+    "id": "program-07",
+    "name": "MSc Business Innovation",
+    "degree": "msc",
+    "universityId": "uni-03"
+  },
+  {
+    "id": "program-08",
+    "name": "MA International Affairs and Governance",
+    "degree": "msc",
+    "universityId": "uni-03"
+  },
+  {
+    "id": "program-09",
+    "name": "MSc Finance",
+    "degree": "msc",
+    "universityId": "uni-03"
+  },
+  {
+    "id": "program-10",
+    "name": "BSc Business Administration",
+    "degree": "bsc",
+    "universityId": "uni-03"
+  },
+  {
+    "id": "program-11",
+    "name": "MSc Informatics",
+    "degree": "msc",
+    "universityId": "uni-04"
+  },
+  {
+    "id": "program-12",
+    "name": "MSc Economics",
+    "degree": "msc",
+    "universityId": "uni-04"
+  },
+  {
+    "id": "program-13",
+    "name": "PhD Psychology",
+    "degree": "phd",
+    "universityId": "uni-04"
+  },
+  {
+    "id": "program-14",
+    "name": "MSc Biomedical Sciences",
+    "degree": "msc",
+    "universityId": "uni-05"
+  },
+  {
+    "id": "program-15",
+    "name": "BSc Economics and Social Sciences",
+    "degree": "bsc",
+    "universityId": "uni-05"
+  },
+  {
+    "id": "program-16",
+    "name": "MSc Climate Sciences",
+    "degree": "msc",
+    "universityId": "uni-05"
+  },
+  {
+    "id": "program-17",
+    "name": "MSc Molecular Biology",
+    "degree": "msc",
+    "universityId": "uni-06"
+  },
+  {
+    "id": "program-18",
+    "name": "MSc Business and Technology",
+    "degree": "msc",
+    "universityId": "uni-06"
+  },
+  {
+    "id": "program-19",
+    "name": "BSc Pharmaceutical Sciences",
+    "degree": "bsc",
+    "universityId": "uni-06"
+  },
+  {
+    "id": "program-20",
+    "name": "MSc Applied Linguistics",
+    "degree": "msc",
+    "universityId": "uni-07"
+  },
+  {
+    "id": "program-21",
+    "name": "MSc Engineering (Industrial Engineering)",
+    "degree": "msc",
+    "universityId": "uni-07"
+  },
+  {
+    "id": "program-22",
+    "name": "BSc Business Information Technology",
+    "degree": "bsc",
+    "universityId": "uni-07"
+  },
+  {
+    "id": "program-23",
+    "name": "MSc Data Science",
+    "degree": "msc",
+    "universityId": "uni-08"
+  },
+  {
+    "id": "program-24",
+    "name": "BSc Mechanical Engineering",
+    "degree": "bsc",
+    "universityId": "uni-08"
+  },
+  {
+    "id": "program-25",
+    "name": "MSc Business Administration (Digital Transformation)",
+    "degree": "msc",
+    "universityId": "uni-08"
+  },
+  {
+    "id": "program-26",
+    "name": "MSc Computer Science",
+    "degree": "msc",
+    "universityId": "uni-09"
+  },
+  {
+    "id": "program-27",
+    "name": "BSc Renewable Energies and Environmental Engineering",
+    "degree": "bsc",
+    "universityId": "uni-09"
+  },
+  {
+    "id": "program-28",
+    "name": "MSc Computational Science",
+    "degree": "msc",
+    "universityId": "uni-10"
+  },
+  {
+    "id": "program-29",
+    "name": "MSc Finance",
+    "degree": "msc",
+    "universityId": "uni-10"
+  },
+  {
+    "id": "program-30",
+    "name": "MSc Communication, Management and Health",
+    "degree": "msc",
+    "universityId": "uni-10"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "uni-01",
+    "name": "ETH Zurich",
+    "country": "CH",
+    "domains": ["ethz.ch"]
+  },
+  {
+    "id": "uni-02",
+    "name": "EPFL",
+    "country": "CH",
+    "domains": ["epfl.ch"]
+  },
+  {
+    "id": "uni-03",
+    "name": "University of St. Gallen (HSG)",
+    "country": "CH",
+    "domains": ["unisg.ch"]
+  },
+  {
+    "id": "uni-04",
+    "name": "University of Zurich",
+    "country": "CH",
+    "domains": ["uzh.ch"]
+  },
+  {
+    "id": "uni-05",
+    "name": "University of Bern",
+    "country": "CH",
+    "domains": ["unibe.ch"]
+  },
+  {
+    "id": "uni-06",
+    "name": "University of Basel",
+    "country": "CH",
+    "domains": ["unibas.ch"]
+  },
+  {
+    "id": "uni-07",
+    "name": "ZHAW",
+    "country": "CH",
+    "domains": ["zhaw.ch"]
+  },
+  {
+    "id": "uni-08",
+    "name": "FHNW",
+    "country": "CH",
+    "domains": ["fhnw.ch"]
+  },
+  {
+    "id": "uni-09",
+    "name": "OST \u2013 Eastern Switzerland University of Applied Sciences",
+    "country": "CH",
+    "domains": ["ost.ch"]
+  },
+  {
+    "id": "uni-10",
+    "name": "USI \u2013 Universit\u00e0 della Svizzera italiana",
+    "country": "CH",
+    "domains": ["usi.ch"]
+  }
+]
