@@ -12,43 +12,43 @@ Welcome! This repository contains everything you need to work on the Studyond ha
 
 Design and prototype an **AI-powered thesis journey** -- a modular, adaptive flow that guides students through their entire thesis process using Studyond's existing ecosystem (topics, supervisors, companies, experts, mentors, AI matching).
 
-Full brief: [`context/Challenge Brief.md`](context/Challenge%20Brief.md)
+Full brief: [`context/Challenge Brief.md`](kickoff-material/context/Challenge%20Brief.md)
 
 ## Studyond Brain
 
 The `context/` folder is the **Studyond Brain** -- an interconnected knowledge graph of atomic notes about Studyond. Each note covers one concept and links to related notes via `[[wiki-links]]`.
 
-**To explore:** Open the `context/` folder in Obsidian and use graph view, or start with [`Studyond Brain.md`](context/Studyond%20Brain.md).
+**To explore:** Open the `context/` folder in Obsidian and use graph view, or start with [`Studyond Brain.md`](kickoff-material/context/Studyond%20Brain.md).
 
 **Key entry points:**
 
 | Note                                                           | What's inside                                  |
 | -------------------------------------------------------------- | ---------------------------------------------- |
-| [`Studyond Brain.md`](context/Studyond%20Brain.md)             | Map of Content -- start here                   |
-| [`Challenge Brief.md`](context/Challenge%20Brief.md)           | The hackathon brief, what to build             |
-| [`Opportunity Space.md`](context/Opportunity%20Space.md)       | What doesn't exist yet -- where to build       |
-| [`Thesis Journey.md`](context/Thesis%20Journey.md)             | The 5-stage thesis process and building blocks |
-| [`Studyond.md`](context/Studyond.md)                           | Company overview                               |
-| [`Platform Overview.md`](context/Platform%20Overview.md)       | Current features and capabilities              |
-| [`Data Model.md`](context/Data%20Model.md)                     | Entities and relationships                     |
-| [`Students.md`](context/Students.md)                           | Primary audience profile                       |
-| [`Editorial Minimalism.md`](context/Editorial%20Minimalism.md) | Design philosophy                              |
+| [`Studyond Brain.md`](kickoff-material/context/Studyond%20Brain.md)             | Map of Content -- start here                   |
+| [`Challenge Brief.md`](kickoff-material/context/Challenge%20Brief.md)           | The hackathon brief, what to build             |
+| [`Opportunity Space.md`](kickoff-material/context/Opportunity%20Space.md)       | What doesn't exist yet -- where to build       |
+| [`Thesis Journey.md`](kickoff-material/context/Thesis%20Journey.md)             | The 5-stage thesis process and building blocks |
+| [`Studyond.md`](kickoff-material/context/Studyond.md)                           | Company overview                               |
+| [`Platform Overview.md`](kickoff-material/context/Platform%20Overview.md)       | Current features and capabilities              |
+| [`Data Model.md`](kickoff-material/context/Data%20Model.md)                     | Entities and relationships                     |
+| [`Students.md`](kickoff-material/context/Students.md)                           | Primary audience profile                       |
+| [`Editorial Minimalism.md`](kickoff-material/context/Editorial%20Minimalism.md) | Design philosophy                              |
 
 ## Brand & UI
 
 The `brand/` folder contains assets and references for building on-brand interfaces:
 
-Start with [`brand/README.md`](brand/README.md) for an overview, then grab what you need:
+Start with [`brand/README.md`](kickoff-material/brand/README.md) for an overview, then grab what you need:
 
 | File                                               | What's inside                                    |
 | -------------------------------------------------- | ------------------------------------------------ |
-| [`setup.md`](brand/setup.md)                       | Tech stack, install commands, shadcn config      |
-| [`colors.md`](brand/colors.md)                     | Copy-pasteable CSS variables (light + dark mode) |
-| [`typography.md`](brand/typography.md)             | Font stack, type scale classes                   |
-| [`components.md`](brand/components.md)             | Layout, components, icons, animation             |
-| [`ai-integration.md`](brand/ai-integration.md)     | Vercel AI SDK setup, AI visual style             |
-| [`image-generation.md`](brand/image-generation.md) | Generate brand-consistent images with Gemini     |
-| [`studyond.svg`](brand/studyond.svg)               | Logo                                             |
+| [`setup.md`](kickoff-material/brand/setup.md)                       | Tech stack, install commands, shadcn config      |
+| [`colors.md`](kickoff-material/brand/colors.md)                     | Copy-pasteable CSS variables (light + dark mode) |
+| [`typography.md`](kickoff-material/brand/typography.md)             | Font stack, type scale classes                   |
+| [`components.md`](kickoff-material/brand/components.md)             | Layout, components, icons, animation             |
+| [`ai-integration.md`](kickoff-material/brand/ai-integration.md)     | Vercel AI SDK setup, AI visual style             |
+| [`image-generation.md`](kickoff-material/brand/image-generation.md) | Generate brand-consistent images with Gemini     |
+| [`studyond.svg`](kickoff-material/brand/studyond.svg)               | Logo                                             |
 
 ## Using the Brain with AI Tools
 
