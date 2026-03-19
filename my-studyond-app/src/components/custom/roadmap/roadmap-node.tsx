@@ -133,7 +133,7 @@ export function RoadmapNodeComponent({
         onClick={() => isClickable && onClick?.(node.id)}
         disabled={!isClickable}
         className={cn(
-          "flex w-full items-start gap-3 rounded-xl p-4 text-left transition-all duration-300",
+          "flex w-50 h-auto items-start gap-3 rounded-xl p-4 text-left transition-all duration-300",
           styles.bg,
           isClickable && "cursor-pointer hover:shadow-lg",
           !isClickable && "cursor-default",
@@ -153,7 +153,7 @@ export function RoadmapNodeComponent({
           <div className="flex items-center gap-2">
             <span
               className={cn(
-                "ds-label truncate",
+                "ds-label",
                 styles.text,
                 variant === "current" && "font-semibold"
               )}
@@ -172,7 +172,7 @@ export function RoadmapNodeComponent({
           {node.description && (
             <p
               className={cn(
-                "ds-caption line-clamp-2",
+                "ds-caption",
                 variant === "current"
                   ? "text-primary-foreground/70"
                   : "text-muted-foreground"

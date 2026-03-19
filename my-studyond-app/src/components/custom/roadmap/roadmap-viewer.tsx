@@ -108,13 +108,7 @@ export function RoadmapViewer() {
             {/* Branch cards */}
             <div
               className={cn(
-                "flex w-full justify-center gap-4",
-                branches.length === 1
-                  ? "max-w-sm"
-                  : branches.length === 2
-                    ? "max-w-2xl"
-                    : "max-w-4xl",
-                "flex-wrap"
+                "flex w-full justify-center gap-3 flex-wrap"
               )}
             >
               {branches.map((branch, i) => (

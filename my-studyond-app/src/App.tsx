@@ -13,7 +13,9 @@ import { thesisRoadmap } from './data/thesis-roadmap';
 function AppLayout() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Navbar />
+      <div className='hidden md:inline-block'>
+        <Navbar/>
+      </div>
       <main className="flex-1 overflow-hidden">
         <Routes>
           <Route path="/" element={<HomePage />} />
