@@ -1,35 +1,45 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Pin, PinOff, Sparkles, CheckCircle } from 'lucide-react';
+import { Pin, PinOff, CheckCircle, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAppStore } from '@/store/useAppStore';
+import type { Thread, RoadmapStepId } from '@/types';
+
+// Maps entity type to the roadmap step it most logically closes
+const DEFAULT_STEP_FOR_ENTITY: Record<string, RoadmapStepId> = {
+  topic: 'topic',
+  supervisor: 'supervisor',
+  company: 'company',
+};
 
 interface CommitButtonProps {
-  threadId: string;
+  thread: Thread;
 }
 
-export function CommitButton({ threadId }: CommitButtonProps) {
-  const { committedThreadId, commitToThread, uncommitThread } = useAppStore();
-  const isCommitted = committedThreadId === threadId;
-  const isOtherCommitted = committedThreadId !== null && committedThreadId !== threadId;
-  const [showConfirm, setShowConfirm] = useState(false);
+export function CommitButton({ thread }: CommitButtonProps) {
+  const { roadmapSteps, commitToThread, uncommitThread } = useAppStore();
+  const isCommitted = thread.closedStepId !== null;
+  const [showStepPicker, setShowStepPicker] = useState(false);
 
-  const handleClick = () => {
+  // Pre-select the step based on entity type
+  const [selectedStep, setSelectedStep] = useState<RoadmapStepId>(
+    DEFAULT_STEP_FOR_ENTITY[thread.card.entityType] ?? 'topic'
+  );
+
+  const handleCommit = () => {
     if (isCommitted) {
-      uncommitThread();
+      uncommitThread(thread.id);
       return;
     }
-    if (isOtherCommitted) {
-      setShowConfirm(true);
-      return;
-    }
-    commitToThread(threadId);
+    setShowStepPicker(true);
   };
 
-  const handleConfirm = () => {
-    setShowConfirm(false);
-    commitToThread(threadId);
+  const handleConfirmCommit = () => {
+    commitToThread(thread.id, selectedStep);
+    setShowStepPicker(false);
   };
+
+  const committedStep = roadmapSteps.find((s) => s.id === thread.closedStepId);
 
   return (
     <div className="flex flex-col gap-2">
@@ -47,16 +57,18 @@ export function CommitButton({ threadId }: CommitButtonProps) {
             </div>
             <div className="flex-1 min-w-0">
               <p className="ds-label text-amber-700 dark:text-amber-400 font-semibold">
-                Committed to this thesis
+                Committed
               </p>
-              <p className="ds-caption text-amber-600/80 dark:text-amber-500/80">
-                Your roadmap has been updated. Pinned to your inbox.
-              </p>
+              {committedStep && (
+                <p className="ds-caption text-amber-600/80 dark:text-amber-500/80">
+                  Closes: {committedStep.label}
+                </p>
+              )}
             </div>
             <Button
               variant="ghost"
               size="sm"
-              onClick={handleClick}
+              onClick={handleCommit}
               className="text-amber-600 hover:text-amber-700 hover:bg-amber-100 dark:text-amber-400 dark:hover:bg-amber-900/30 rounded-full flex-shrink-0"
             >
               <PinOff className="size-4 mr-1.5" />
@@ -71,49 +83,95 @@ export function CommitButton({ threadId }: CommitButtonProps) {
             exit={{ opacity: 0, scale: 0.9 }}
           >
             <Button
-              onClick={handleClick}
+              onClick={handleCommit}
               className="w-full rounded-xl h-12 gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-medium shadow-sm"
             >
               <Pin className="size-4" />
               Commit to this Thesis
             </Button>
             <p className="ds-caption text-muted-foreground text-center mt-1.5">
-              This will update your roadmap and pin this thread
+              Close a roadmap step and pin this thread
             </p>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Confirmation dialog for switching commitment */}
+      {/* Step picker — shown when committing */}
       <AnimatePresence>
-        {showConfirm && (
+        {showStepPicker && (
           <motion.div
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 4 }}
-            className="p-4 rounded-xl border border-border bg-muted/50"
+            className="p-4 rounded-xl border border-border bg-card shadow-md space-y-3"
           >
-            <div className="flex items-start gap-3">
-              <Sparkles className="size-4 text-ai-solid mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="ds-label mb-1 text-foreground">Switch your commitment?</p>
-                <p className="ds-small text-muted-foreground mb-3">
-                  You're already committed to another thesis. Committing here will update your previous commitment.
-                </p>
-                <div className="flex gap-2">
-                  <Button size="sm" onClick={handleConfirm} className="rounded-full">
-                    Yes, switch
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => setShowConfirm(false)}
-                    className="rounded-full"
+            <p className="ds-label text-foreground">Which step does this close?</p>
+            <p className="ds-caption text-muted-foreground -mt-1">
+              Select the roadmap step this commitment fulfills.
+            </p>
+
+            {/* Step selector */}
+            <div className="space-y-2">
+              {roadmapSteps.map((step) => {
+                const isAlreadyCommitted = step.status === 'committed';
+                const isSelected = selectedStep === step.id;
+
+                return (
+                  <button
+                    key={step.id}
+                    onClick={() => !isAlreadyCommitted && setSelectedStep(step.id as RoadmapStepId)}
+                    disabled={isAlreadyCommitted && step.committedThreadId !== thread.id}
+                    className={`
+                      w-full text-left flex items-center gap-3 p-3 rounded-lg border transition-all
+                      ${isSelected
+                        ? 'border-amber-400 bg-amber-50 dark:bg-amber-950/30'
+                        : 'border-border hover:border-foreground/20 bg-background'}
+                      ${isAlreadyCommitted && step.committedThreadId !== thread.id
+                        ? 'opacity-40 cursor-not-allowed'
+                        : 'cursor-pointer'}
+                    `}
                   >
-                    Cancel
-                  </Button>
-                </div>
-              </div>
+                    <div
+                      className={`size-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center
+                        ${isSelected ? 'border-amber-500 bg-amber-500' : 'border-border'}`}
+                    >
+                      {isSelected && <div className="size-1.5 rounded-full bg-white" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="ds-label text-foreground">{step.label}</p>
+                      <p className="ds-caption text-muted-foreground truncate">{step.description}</p>
+                    </div>
+                    {isAlreadyCommitted && (
+                      <span className="ds-badge text-amber-600 dark:text-amber-400 flex-shrink-0">
+                        Already set
+                      </span>
+                    )}
+                    {isSelected && !isAlreadyCommitted && (
+                      <ChevronDown className="size-4 text-amber-500 flex-shrink-0 rotate-[-90deg]" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Confirm / Cancel */}
+            <div className="flex gap-2 pt-1">
+              <Button
+                onClick={handleConfirmCommit}
+                size="sm"
+                className="flex-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white"
+              >
+                <Pin className="size-3.5 mr-1.5" />
+                Commit
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowStepPicker(false)}
+                className="rounded-full"
+              >
+                Cancel
+              </Button>
             </div>
           </motion.div>
         )}

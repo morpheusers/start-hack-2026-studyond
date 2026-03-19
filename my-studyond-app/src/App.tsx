@@ -6,8 +6,12 @@ import { HomePage } from './pages/HomePage';
 import { ChatbotPage } from './pages/ChatbotPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { ThreadPage } from './pages/ThreadPage';
+import { useInitializeApp } from './hooks/useInitializeApp';
 
 function AppLayout() {
+  // Hydrate Zustand store from MongoDB on mount
+  useInitializeApp();
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />

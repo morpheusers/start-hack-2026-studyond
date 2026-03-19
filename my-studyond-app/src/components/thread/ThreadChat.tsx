@@ -5,22 +5,31 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useAppStore } from '@/store/useAppStore';
-import { getInitialsColor } from '@/data/mockMatches';
+import { getInitialsColor, getInitialsFromName } from '@/data/mockMatches';
 import type { Thread, ThreadMessage } from '@/types';
 
-// Simulate a context-aware AI response for thread-specific questions
+// Send a thread-specific chat message (mode=thread, no match cards returned)
 async function generateThreadResponse(
-  threadCard: Thread['card'],
+  thread: Thread,
   userMessage: string,
   systemContext: string
 ): Promise<string> {
   try {
+    const { card } = thread;
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        systemContext: `${systemContext}\n\n## Current Thread Context\nThe student is discussing a specific opportunity:\n- Entity: ${threadCard.name} (${threadCard.entityType})\n- Topic: ${threadCard.topicTitle ?? 'General inquiry'}\n- Match Score: ${threadCard.compatibilityScore}/5\n- Description: ${threadCard.description}\n\nRespond conversationally to their question. Do NOT generate match cards — this is a focused thread conversation. Be specific, helpful, and concise.`,
-        messages: [{ role: 'user', content: userMessage }],
+        mode: 'thread',
+        systemContext,
+        threadContext: {
+          entityName: card.name,
+          entityType: card.entityType,
+          topicTitle: card.topicTitle,
+          description: card.description,
+          tags: card.tags,
+        },
+        messages: [{ role: 'user', parts: [{ type: 'text', text: userMessage }], id: 'msg-1' }],
       }),
     });
 
@@ -35,26 +44,26 @@ async function generateThreadResponse(
       const { done, value } = await reader.read();
       if (done) break;
       const chunk = decoder.decode(value);
-      // Parse Vercel AI SDK data stream format
+      // Parse Vercel AI SDK UIMessageStream format — text parts are prefixed with "0:"
       const lines = chunk.split('\n');
       for (const line of lines) {
         if (line.startsWith('0:')) {
           try {
             const content = JSON.parse(line.slice(2));
-            fullText += content;
+            if (typeof content === 'string') fullText += content;
           } catch {
             // skip malformed lines
           }
         }
       }
     }
-    return fullText || 'I couldn\'t generate a response. Please try again.';
+    return fullText.trim() || 'I couldn\'t generate a response. Please try again.';
   } catch {
-    // Fallback responses
+    const { card } = thread;
     const fallbacks = [
-      `Great question about ${threadCard.name}! Based on your profile, this opportunity aligns well with your ${threadCard.tags[0]?.replace('#', '')} background. I'd recommend reaching out directly to express your interest.`,
-      `For the ${threadCard.topicTitle ?? 'thesis topic'}, the key skills you'd need are: ${threadCard.tags.slice(0, 3).join(', ')}. Your current skillset covers most of these well.`,
-      `The timeline for this kind of thesis is typically 5-6 months. Given your experience, you'd likely spend the first 2 months on literature review and methodology, then 3-4 months on implementation and analysis.`,
+      `Great question about ${card.name}! Based on your profile, this opportunity aligns well with your ${card.tags[0]?.replace('#', '') ?? 'background'}. I'd recommend reaching out directly to express your interest.`,
+      `For the ${card.topicTitle ?? 'thesis topic'}, the key skills you'd need include: ${card.tags.slice(0, 3).join(', ')}. Your current skillset covers most of these well.`,
+      `The timeline for this kind of thesis is typically 5-6 months. You'd likely spend the first 2 months on literature review and methodology, then 3-4 months on implementation and analysis.`,
     ];
     return fallbacks[Math.floor(Math.random() * fallbacks.length)];
   }
@@ -85,6 +94,9 @@ export function ThreadChat({ thread }: ThreadChatProps) {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const initials = thread.card.initials ?? getInitialsFromName(thread.card.name);
+  const colorClass = getInitialsColor(initials);
+
   useEffect(() => {
     markThreadRead(thread.id);
   }, [thread.id, markThreadRead]);
@@ -107,11 +119,7 @@ export function ThreadChat({ thread }: ThreadChatProps) {
     };
     addMessageToThread(thread.id, userMessage);
 
-    const responseText = await generateThreadResponse(
-      thread.card,
-      userText,
-      buildSystemContext()
-    );
+    const responseText = await generateThreadResponse(thread, userText, buildSystemContext());
 
     const assistantMessage: ThreadMessage = {
       id: `msg-${Date.now()}-ai`,
@@ -152,9 +160,9 @@ export function ThreadChat({ thread }: ThreadChatProps) {
                 className={`flex items-end gap-2 ${isUser ? 'flex-row-reverse' : ''}`}
               >
                 {!isUser ? (
-                  <Avatar className={`size-7 flex-shrink-0 ${getInitialsColor(thread.card.initials)}`}>
-                    <AvatarFallback className={`text-xs font-semibold ${getInitialsColor(thread.card.initials)}`}>
-                      {thread.card.initials}
+                  <Avatar className={`size-7 flex-shrink-0 ${colorClass}`}>
+                    <AvatarFallback className={`text-xs font-semibold ${colorClass}`}>
+                      {initials}
                     </AvatarFallback>
                   </Avatar>
                 ) : (

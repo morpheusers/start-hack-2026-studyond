@@ -6,9 +6,10 @@ import { ThreadInbox } from '@/components/home/ThreadInbox';
 import { useAppStore } from '@/store/useAppStore';
 
 export function HomePage() {
-  const { profile, savedThreads, committedThreadId, roadmapSteps } = useAppStore();
-  const completedSteps = roadmapSteps.filter((s) => s.status === 'completed').length;
-  const currentStep = roadmapSteps.find((s) => s.status === 'current');
+  const { profile, savedThreads, roadmapSteps } = useAppStore();
+  const committedSteps = roadmapSteps.filter((s) => s.status === 'committed').length;
+  const openSteps = roadmapSteps.filter((s) => s.status === 'open');
+  const hasAnyCommitment = committedSteps > 0;
 
   return (
     <div className="h-full overflow-y-auto page-enter">
@@ -21,9 +22,9 @@ export function HomePage() {
               Hi, {profile.firstName} 👋
             </h1>
             <p className="ds-body text-muted-foreground mt-1">
-              {currentStep
-                ? `Next up: ${currentStep.label}`
-                : 'Your thesis journey is on track.'}
+              {openSteps.length > 0
+                ? `Still searching: ${openSteps.map((s) => s.label).join(', ')}`
+                : 'Your thesis setup is complete!'}
             </p>
           </div>
           <Link to="/chat">
@@ -39,15 +40,15 @@ export function HomePage() {
           <TrendingUp className="size-5 text-muted-foreground flex-shrink-0" />
           <div className="flex-1">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="ds-label text-foreground">Thesis Journey</span>
+              <span className="ds-label text-foreground">Thesis Setup</span>
               <span className="ds-label text-muted-foreground">
-                {completedSteps} / {roadmapSteps.length} steps
+                {committedSteps} / {roadmapSteps.length} committed
               </span>
             </div>
             <div className="w-full bg-border rounded-full h-1.5 overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all duration-700"
-                style={{ width: `${(completedSteps / roadmapSteps.length) * 100}%` }}
+                style={{ width: `${(committedSteps / Math.max(roadmapSteps.length, 1)) * 100}%` }}
               />
             </div>
           </div>
@@ -57,9 +58,9 @@ export function HomePage() {
         <section>
           <div className="flex items-center justify-between mb-5">
             <h2 className="ds-title-sm text-foreground">Your Roadmap</h2>
-            {committedThreadId && (
+            {hasAnyCommitment && (
               <span className="ds-caption text-emerald-600 dark:text-emerald-400 font-medium">
-                Supervisor secured
+                {committedSteps} step{committedSteps !== 1 ? 's' : ''} committed
               </span>
             )}
           </div>

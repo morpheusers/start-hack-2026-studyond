@@ -4,7 +4,7 @@ import { Star, Pin } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import type { Thread } from '@/types';
-import { getInitialsColor } from '@/data/mockMatches';
+import { getInitialsColor, getInitialsFromName } from '@/data/mockMatches';
 
 interface ThreadItemProps {
   thread: Thread;
@@ -36,6 +36,8 @@ export function ThreadItem({ thread, isCommitted }: ThreadItemProps) {
   const lastMessage = thread.messages[thread.messages.length - 1];
   const preview = lastMessage?.content.replace(/\*\*/g, '').replace(/\*/g, '').slice(0, 80) + '...';
   const timeAgo = getTimeAgo(thread.lastActivity);
+  const initials = thread.card.initials ?? getInitialsFromName(thread.card.name);
+  const colorClass = getInitialsColor(initials);
 
   return (
     <Link to={`/thread/${thread.id}`}>
@@ -52,9 +54,9 @@ export function ThreadItem({ thread, isCommitted }: ThreadItemProps) {
       >
         {/* Avatar */}
         <div className="relative flex-shrink-0">
-          <Avatar className={`size-10 ${getInitialsColor(thread.card.initials)}`}>
-            <AvatarFallback className={`text-sm font-semibold ${getInitialsColor(thread.card.initials)}`}>
-              {thread.card.initials}
+          <Avatar className={`size-10 ${colorClass}`}>
+            <AvatarFallback className={`text-sm font-semibold ${colorClass}`}>
+              {initials}
             </AvatarFallback>
           </Avatar>
           {isCommitted && (
@@ -115,7 +117,7 @@ export function ThreadItem({ thread, isCommitted }: ThreadItemProps) {
   );
 }
 
-function getTimeAgo(date: Date): string {
+function getTimeAgo(date: Date | string): string {
   const now = Date.now();
   const d = typeof date === 'string' ? new Date(date) : date;
   const diff = now - d.getTime();

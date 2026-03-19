@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ThreadChat } from '@/components/thread/ThreadChat';
 import { CommitButton } from '@/components/thread/CommitButton';
 import { useAppStore } from '@/store/useAppStore';
-import { getInitialsColor } from '@/data/mockMatches';
+import { getInitialsColor, getInitialsFromName } from '@/data/mockMatches';
 
 function EntityTypeIcon({ type }: { type: string }) {
   if (type === 'company') return <Building2 className="size-3.5" />;
@@ -34,7 +34,7 @@ function MiniStars({ score }: { score: number }) {
 export function ThreadPage() {
   const { threadId } = useParams<{ threadId: string }>();
   const navigate = useNavigate();
-  const { getThread, removeThread, committedThreadId } = useAppStore();
+  const { getThread, removeThread } = useAppStore();
 
   const thread = threadId ? getThread(threadId) : undefined;
 
@@ -51,8 +51,10 @@ export function ThreadPage() {
     );
   }
 
-  const isCommitted = committedThreadId === thread.id;
+  const isCommitted = thread.closedStepId !== null;
   const card = thread.card;
+  const initials = card.initials ?? getInitialsFromName(card.name);
+  const colorClass = getInitialsColor(initials);
 
   const handleDelete = () => {
     removeThread(thread.id);
@@ -89,9 +91,9 @@ export function ThreadPage() {
 
           {/* Entity header */}
           <div className="flex items-start gap-3">
-            <Avatar className={`size-14 flex-shrink-0 ${getInitialsColor(card.initials)}`}>
-              <AvatarFallback className={`text-lg font-bold ${getInitialsColor(card.initials)}`}>
-                {card.initials}
+            <Avatar className={`size-14 flex-shrink-0 ${colorClass}`}>
+              <AvatarFallback className={`text-lg font-bold ${colorClass}`}>
+                {initials}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
@@ -139,8 +141,8 @@ export function ThreadPage() {
             ))}
           </div>
 
-          {/* Commit button */}
-          <CommitButton threadId={thread.id} />
+          {/* Commit button — new step-based model */}
+          <CommitButton thread={thread} />
         </div>
       </motion.div>
 
@@ -149,7 +151,7 @@ export function ThreadPage() {
         {isCommitted && (
           <div className="flex-shrink-0 px-4 py-2 bg-amber-50 dark:bg-amber-950/20 border-b border-amber-200 dark:border-amber-800">
             <p className="ds-caption text-amber-700 dark:text-amber-400 text-center">
-              You are committed to this thesis
+              Committed to this thesis — {thread.closedStepId} step closed
             </p>
           </div>
         )}

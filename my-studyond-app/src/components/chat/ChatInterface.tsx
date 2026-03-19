@@ -96,14 +96,18 @@ export function ChatInterface({ onMatchesReceived }: ChatInterfaceProps) {
     if (!input.trim() || isLoading) return;
     sendMessage(
       { text: input.trim() },
-      { body: { systemContext } }
+      { body: { systemContext, studentId: profile.id, mode: 'search' } }
     );
     setInput('');
   };
 
   const handleSuggestedPrompt = (prompt: string) => {
-    setInput(prompt);
-    textareaRef.current?.focus();
+    // Send immediately instead of just setting input
+    sendMessage(
+      { text: prompt },
+      { body: { systemContext, studentId: profile.id, mode: 'search' } }
+    );
+    setHasShownDeck(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {

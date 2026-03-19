@@ -6,23 +6,8 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ProfileEditor } from '@/components/profile/ProfileEditor';
 import { TagBadges } from '@/components/profile/TagBadges';
 import { useAppStore } from '@/store/useAppStore';
+import { updateStudent, updateStudentTags, extractTags } from '@/api';
 import type { StudentProfile } from '@/types';
-
-async function extractTagsFromProfile(profile: StudentProfile): Promise<string[]> {
-  try {
-    const response = await fetch('/api/extract-tags', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ profile }),
-    });
-    if (!response.ok) throw new Error('API error');
-    const data = await response.json();
-    return data.tags ?? [];
-  } catch {
-    // Fallback: combine skills + interests as tags
-    return [...profile.skills, ...profile.interests].slice(0, 12);
-  }
-}
 
 export function ProfilePage() {
   const { profile, profileTags, updateProfile, setProfileTags } = useAppStore();
@@ -40,12 +25,22 @@ export function ProfilePage() {
     setIsSaving(true);
     setIsTagLoading(true);
 
-    // Update global store immediately
+    // 1. Update Zustand immediately (optimistic)
     updateProfile(localProfile);
 
-    // Extract AI tags
-    const tags = await extractTagsFromProfile(localProfile);
-    setProfileTags(tags);
+    try {
+      // 2. Persist profile to DB
+      await updateStudent(localProfile.id, localProfile);
+
+      // 3. Extract AI tags and persist
+      const tags = await extractTags(localProfile).catch(() =>
+        [...localProfile.skills, ...localProfile.interests].slice(0, 12)
+      );
+      setProfileTags(tags);
+      await updateStudentTags(localProfile.id, tags).catch(() => {});
+    } catch {
+      // Silent fail — Zustand already updated
+    }
 
     setIsSaving(false);
     setIsTagLoading(false);

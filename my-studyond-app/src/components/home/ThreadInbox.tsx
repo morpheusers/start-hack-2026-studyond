@@ -8,7 +8,7 @@ import { ThreadSearch } from './ThreadSearch';
 import { useAppStore } from '@/store/useAppStore';
 
 export function ThreadInbox() {
-  const { savedThreads, committedThreadId } = useAppStore();
+  const { savedThreads } = useAppStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTags, setActiveTags] = useState<string[]>([]);
 
@@ -19,16 +19,18 @@ export function ThreadInbox() {
     return Array.from(tagSet);
   }, [savedThreads]);
 
-  // Filter threads
+  // Filter and sort threads
   const filteredThreads = useMemo(() => {
     let threads = [...savedThreads];
 
-    // Pin committed thread to top
-    const committedIndex = threads.findIndex((t) => t.id === committedThreadId);
-    if (committedIndex > 0) {
-      const [committed] = threads.splice(committedIndex, 1);
-      threads.unshift(committed);
-    }
+    // Committed threads (closedStepId !== null) float to the top
+    threads.sort((a, b) => {
+      const aCommitted = a.closedStepId !== null;
+      const bCommitted = b.closedStepId !== null;
+      if (aCommitted && !bCommitted) return -1;
+      if (!aCommitted && bCommitted) return 1;
+      return new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime();
+    });
 
     // Apply search
     if (searchQuery.trim()) {
@@ -50,7 +52,7 @@ export function ThreadInbox() {
     }
 
     return threads;
-  }, [savedThreads, committedThreadId, searchQuery, activeTags]);
+  }, [savedThreads, searchQuery, activeTags]);
 
   const handleTagClick = (tag: string) => {
     setActiveTags((prev) =>
@@ -95,7 +97,7 @@ export function ThreadInbox() {
               <ThreadItem
                 key={thread.id}
                 thread={thread}
-                isCommitted={thread.id === committedThreadId}
+                isCommitted={thread.closedStepId !== null}
               />
             ))}
           </div>

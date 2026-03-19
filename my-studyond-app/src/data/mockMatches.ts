@@ -16,7 +16,6 @@ export const MOCK_MATCH_CARDS: MatchCard[] = [
       'Your Python and distributed systems skills are a near-perfect fit for this federated learning project. Swisscom\'s privacy-preserving ML challenge directly leverages your Kubernetes expertise, and the hybrid work model suits ETH\'s thesis requirements perfectly.',
     tags: ['#FederatedLearning', '#Privacy', '#Hybrid', '#Telecom', '#Python'],
     topicTitle: 'Federated Learning for Telecom Network Optimization',
-    workplaceType: 'hybrid',
   },
   {
     id: 'match-002',
@@ -45,7 +44,6 @@ export const MOCK_MATCH_CARDS: MatchCard[] = [
       'ABB\'s Edge AI quality inspection project maps directly to your machine learning background. Running lightweight ML models on industrial edge hardware is a practical application of efficient inference — exactly the thesis direction you described. Working student contract included.',
     tags: ['#EdgeAI', '#ComputerVision', '#Industrial', '#OnSite', '#WorkingStudent'],
     topicTitle: 'Edge AI for Industrial Quality Inspection',
-    workplaceType: 'on_site',
   },
   {
     id: 'match-004',
@@ -60,7 +58,6 @@ export const MOCK_MATCH_CARDS: MatchCard[] = [
       'Nestlé\'s demand forecasting project offers a large-scale ML engineering challenge using real production data. Your distributed systems and Python skills are exactly what\'s needed to build a unified forecasting pipeline. High impact: even small accuracy gains translate to millions in reduced food waste.',
     tags: ['#MLOps', '#DataEngineering', '#Sustainability', '#Hybrid', '#FoodTech'],
     topicTitle: 'AI-Driven Demand Forecasting for Perishable Goods',
-    workplaceType: 'hybrid',
   },
   {
     id: 'match-005',
@@ -73,9 +70,8 @@ export const MOCK_MATCH_CARDS: MatchCard[] = [
     compatibilityScore: 4.2,
     description:
       'SBB\'s predictive maintenance project uses IoT sensor telemetry — a great opportunity to apply anomaly detection with real-world data. Your Kubernetes and distributed systems background makes you well-suited for handling high-volume sensor streams at scale.',
-    tags: ['#PredictiveMaintenance', '#IoT', '#Anomaly Detection', '#OnSite', '#Transport'],
+    tags: ['#PredictiveMaintenance', '#IoT', '#AnomalyDetection', '#OnSite', '#Transport'],
     topicTitle: 'Predictive Maintenance for Rolling Stock Using IoT Data',
-    workplaceType: 'on_site',
   },
   {
     id: 'match-006',
@@ -104,7 +100,6 @@ export const MOCK_MATCH_CARDS: MatchCard[] = [
       'Build a digital twin for collaborative robot work cells using ABB\'s RobotStudio. While this project leans more hardware-adjacent, your ML skills would bring strong value to the predictive maintenance component — and ABB\'s Zurich research center provides excellent industry exposure.',
     tags: ['#DigitalTwin', '#Robotics', '#Simulation', '#OnSite', '#Internship'],
     topicTitle: 'Digital Twin for Collaborative Robot Work Cells',
-    workplaceType: 'on_site',
   },
   {
     id: 'match-008',
@@ -123,20 +118,31 @@ export const MOCK_MATCH_CARDS: MatchCard[] = [
   },
 ];
 
-// Helper: get a color for entity initials avatar
+// Helper: get a color for entity initials avatar (frontend-only)
 export const ENTITY_COLORS: Record<string, string> = {
-  SC: 'bg-blue-100 text-blue-700',
-  MV: 'bg-purple-100 text-purple-700',
-  AB: 'bg-orange-100 text-orange-700',
-  NE: 'bg-red-100 text-red-700',
-  SB: 'bg-green-100 text-green-700',
-  CT: 'bg-indigo-100 text-indigo-700',
-  RO: 'bg-teal-100 text-teal-700',
-  SW: 'bg-sky-100 text-sky-700',
-  NO: 'bg-rose-100 text-rose-700',
-  HI: 'bg-yellow-100 text-yellow-700',
+  SC: 'bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300',
+  MV: 'bg-purple-100 text-purple-700 dark:bg-purple-950/40 dark:text-purple-300',
+  AB: 'bg-orange-100 text-orange-700 dark:bg-orange-950/40 dark:text-orange-300',
+  NE: 'bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-300',
+  SB: 'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-300',
+  CT: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300',
+  RO: 'bg-teal-100 text-teal-700 dark:bg-teal-950/40 dark:text-teal-300',
+  SW: 'bg-sky-100 text-sky-700 dark:bg-sky-950/40 dark:text-sky-300',
+  NO: 'bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300',
+  HI: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-950/40 dark:text-yellow-300',
 };
 
-export function getInitialsColor(initials: string): string {
+export function getInitialsColor(initials: string | undefined): string {
+  if (!initials) return 'bg-muted text-muted-foreground';
   return ENTITY_COLORS[initials] ?? 'bg-muted text-muted-foreground';
+}
+
+export function getInitialsFromName(name: string): string {
+  return name
+    .split(/[\s.]+/)
+    .filter(Boolean)
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
 }

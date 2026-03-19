@@ -1,35 +1,29 @@
 import type { RoadmapStep } from '@/types';
 
+// Default 3-step dynamic checklist — all start open, completable in any order
 export const INITIAL_ROADMAP_STEPS: RoadmapStep[] = [
   {
-    id: 'setup-profile',
-    label: 'Setup Profile',
-    description: 'Complete your profile with skills, interests, and academic background.',
-    status: 'completed',
-    completedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
+    id: 'topic',
+    label: 'Find a Topic',
+    description: 'Choose a research question that anchors your thesis.',
+    status: 'open',
+    committedThreadId: null,
+    committedAt: null,
   },
   {
-    id: 'explore-topics',
-    label: 'Explore Topics',
-    description: 'Use the AI chatbot to discover matching thesis topics and supervisors.',
-    status: 'current',
+    id: 'supervisor',
+    label: 'Find a Supervisor',
+    description: 'Secure an academic guide who will evaluate your work.',
+    status: 'open',
+    committedThreadId: null,
+    committedAt: null,
   },
   {
-    id: 'secure-supervisor',
-    label: 'Secure Supervisor',
-    description: 'Commit to a company or academic supervisor for your thesis.',
-    status: 'future',
-  },
-  {
-    id: 'start-writing',
-    label: 'Start Writing',
-    description: 'Begin your thesis with structured guidance and AI support.',
-    status: 'future',
-  },
-  {
-    id: 'submit-thesis',
-    label: 'Submit Thesis',
-    description: 'Finalize and submit your completed thesis.',
-    status: 'future',
+    id: 'company',
+    label: 'Find a Company',
+    description: 'Partner with a company for real-world data and context.',
+    status: 'open',
+    committedThreadId: null,
+    committedAt: null,
   },
 ];

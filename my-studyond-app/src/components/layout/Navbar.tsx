@@ -8,8 +8,9 @@ import { Badge } from '@/components/ui/badge';
 
 export function Navbar() {
   const location = useLocation();
-  const { profile, savedThreads, committedThreadId } = useAppStore();
+  const { profile, savedThreads, roadmapSteps } = useAppStore();
   const unreadCount = savedThreads.filter((t) => !t.isRead).length;
+  const hasCommitment = roadmapSteps.some((s) => s.status === 'committed');
   const isActive = (path: string) => location.pathname === path;
 
   return (
@@ -73,7 +74,7 @@ export function Navbar() {
           </Button>
         </Link>
 
-        {committedThreadId && (
+        {hasCommitment && (
           <Badge className="bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 ds-badge ml-1">
             Committed
           </Badge>

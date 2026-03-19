@@ -1,7 +1,7 @@
-import { Star, Building2, GraduationCap, BookOpen, MapPin, Laptop } from 'lucide-react';
+import { Star, Building2, GraduationCap, BookOpen } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import type { MatchCard as MatchCardType } from '@/types';
-import { getInitialsColor } from '@/data/mockMatches';
+import { getInitialsColor, getInitialsFromName } from '@/data/mockMatches';
 
 interface MatchCardProps {
   card: MatchCardType;
@@ -41,23 +41,10 @@ function EntityIcon({ type }: { type: MatchCardType['entityType'] }) {
   return <BookOpen className="size-3.5" />;
 }
 
-function WorkplaceBadge({ type }: { type?: MatchCardType['workplaceType'] }) {
-  if (!type) return null;
-  const labels = { remote: 'Remote', hybrid: 'Hybrid', on_site: 'On-site' };
-  const icons = {
-    remote: <Laptop className="size-3" />,
-    hybrid: <MapPin className="size-3" />,
-    on_site: <Building2 className="size-3" />,
-  };
-  return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground ds-badge border border-border">
-      {icons[type]}
-      {labels[type]}
-    </span>
-  );
-}
-
 export function MatchCard({ card, isTop = false }: MatchCardProps) {
+  const initials = card.initials ?? getInitialsFromName(card.name);
+  const colorClass = getInitialsColor(initials);
+
   return (
     <div
       className={`
@@ -68,11 +55,9 @@ export function MatchCard({ card, isTop = false }: MatchCardProps) {
     >
       {/* Card Header — Entity identity */}
       <div className="p-5 pb-4 flex items-start gap-3 border-b border-border">
-        <Avatar className={`size-14 flex-shrink-0 ${getInitialsColor(card.initials)}`}>
-          <AvatarFallback
-            className={`text-lg font-bold ${getInitialsColor(card.initials)}`}
-          >
-            {card.initials}
+        <Avatar className={`size-14 flex-shrink-0 ${colorClass}`}>
+          <AvatarFallback className={`text-lg font-bold ${colorClass}`}>
+            {initials}
           </AvatarFallback>
         </Avatar>
         <div className="flex-1 min-w-0">
@@ -117,9 +102,8 @@ export function MatchCard({ card, isTop = false }: MatchCardProps) {
         <p className="ds-small text-foreground leading-relaxed">{card.description}</p>
       </div>
 
-      {/* Tags + workplace */}
+      {/* Tags */}
       <div className="px-5 pb-5 flex flex-wrap gap-1.5 items-center">
-        {card.workplaceType && <WorkplaceBadge type={card.workplaceType} />}
         {card.tags.map((tag) => (
           <span
             key={tag}
