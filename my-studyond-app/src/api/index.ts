@@ -131,3 +131,37 @@ export async function extractTags(profile: Partial<StudentProfile>): Promise<str
 export async function triggerSeed(): Promise<{ ok: boolean; inserted: number; updated: number }> {
   return apiFetch('/seed');
 }
+
+// ---- Thread Chat (non-streaming) ----
+
+export interface ThreadContext {
+  entityName: string;
+  entityType: string;
+  topicTitle?: string;
+  description: string;
+  tags: string[];
+  compatibilityScore?: number;
+}
+
+export async function sendThreadMessage(
+  message: string,
+  threadContext: ThreadContext,
+  systemContext?: string
+): Promise<string> {
+  const data = await apiFetch<{ text: string; error?: string }>('/thread-chat', {
+    method: 'POST',
+    body: JSON.stringify({ message, threadContext, systemContext }),
+  });
+  if (!data.text) throw new Error(data.error ?? 'Empty response');
+  return data.text;
+}
+
+export async function generateThreadQuestions(
+  threadContext: ThreadContext
+): Promise<string[]> {
+  const data = await apiFetch<{ questions: string[] }>('/thread-chat', {
+    method: 'POST',
+    body: JSON.stringify({ suggestQuestions: true, threadContext }),
+  });
+  return data.questions ?? [];
+}

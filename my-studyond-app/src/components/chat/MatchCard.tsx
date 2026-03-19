@@ -1,7 +1,10 @@
-import { Star, Building2, GraduationCap, BookOpen } from 'lucide-react';
+import { Star, Building2, GraduationCap, BookOpen, ExternalLink } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import type { MatchCard as MatchCardType } from '@/types';
 import { getInitialsColor, getInitialsFromName } from '@/data/mockMatches';
+import { useAppStore } from '@/store/useAppStore';
 
 interface MatchCardProps {
   card: MatchCardType;
@@ -44,6 +47,23 @@ function EntityIcon({ type }: { type: MatchCardType['entityType'] }) {
 export function MatchCard({ card, isTop = false }: MatchCardProps) {
   const initials = card.initials ?? getInitialsFromName(card.name);
   const colorClass = getInitialsColor(initials);
+  const navigate = useNavigate();
+  const { savedThreads, saveThread } = useAppStore();
+
+  const handleSeeDetails = (e: React.MouseEvent) => {
+    // Prevent drag/swipe from triggering when the button is clicked
+    e.stopPropagation();
+
+    // Check if a thread already exists for this card
+    const existing = savedThreads.find((t) => t.id === card.id);
+    if (existing) {
+      navigate(`/thread/${existing.id}`);
+    } else {
+      // Save the thread and navigate to it
+      saveThread(card);
+      navigate(`/thread/${card.id}`);
+    }
+  };
 
   return (
     <div
@@ -103,7 +123,7 @@ export function MatchCard({ card, isTop = false }: MatchCardProps) {
       </div>
 
       {/* Tags */}
-      <div className="px-5 pb-5 flex flex-wrap gap-1.5 items-center">
+      <div className="px-5 pb-3 flex flex-wrap gap-1.5 items-center">
         {card.tags.map((tag) => (
           <span
             key={tag}
@@ -113,6 +133,21 @@ export function MatchCard({ card, isTop = false }: MatchCardProps) {
           </span>
         ))}
       </div>
+
+      {/* See Details button — only on the top card */}
+      {isTop && (
+        <div className="px-5 pb-5">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleSeeDetails}
+            className="w-full rounded-xl gap-2 ds-label border-border hover:border-foreground/30"
+          >
+            <ExternalLink className="size-3.5" />
+            See Details & Chat
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

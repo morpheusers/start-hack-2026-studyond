@@ -101,7 +101,10 @@ function DraggableCard({
 }
 
 export function SwipeDeck({ cards, onDeckEmpty }: SwipeDeckProps) {
-  const [deck, setDeck] = useState<MatchCardType[]>(cards);
+  // Cards arrive sorted descending by score (best first = cards[0]).
+  // The deck stack shows deck[last] on top, so we reverse on init so the
+  // highest-scored card is always the one the user sees first.
+  const [deck, setDeck] = useState<MatchCardType[]>([...cards].reverse());
   const [likedCount, setLikedCount] = useState(0);
   const { saveThread } = useAppStore();
 

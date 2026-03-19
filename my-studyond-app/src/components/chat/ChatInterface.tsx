@@ -9,24 +9,41 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useAppStore } from '@/store/useAppStore';
 import type { MatchCard } from '@/types';
 
-// Parse AI response text to extract JSON match cards
+// Parse AI response text to extract JSON match cards.
+// Also strips partial JSON fences during streaming — anything from ```json onwards
+// is hidden in the chat UI (it will appear as match cards in the swipe deck instead).
 function parseAIResponse(content: string): {
   text: string;
   matches: MatchCard[] | null;
 } {
-  const jsonMatch = content.match(/```json\s*([\s\S]*?)```/);
-  if (!jsonMatch) return { text: content, matches: null };
-
-  const text = content.slice(0, content.indexOf('```json')).trim();
-  try {
-    const parsed = JSON.parse(jsonMatch[1]);
-    if (parsed.matches && Array.isArray(parsed.matches)) {
-      return { text, matches: parsed.matches as MatchCard[] };
+  const fenceStart = content.indexOf('```json');
+  if (fenceStart === -1) {
+    // No JSON fence at all — also strip trailing lone backtick sequences
+    const partialFence = content.indexOf('```');
+    if (partialFence !== -1) {
+      return { text: content.slice(0, partialFence).trim(), matches: null };
     }
-  } catch {
-    // Fall through
+    return { text: content, matches: null };
   }
-  return { text, matches: null };
+
+  // Text before the fence
+  const textBefore = content.slice(0, fenceStart).trim();
+
+  // Try to parse complete block
+  const jsonMatch = content.match(/```json\s*([\s\S]*?)```/);
+  if (jsonMatch) {
+    try {
+      const parsed = JSON.parse(jsonMatch[1]);
+      if (parsed.matches && Array.isArray(parsed.matches)) {
+        return { text: textBefore, matches: parsed.matches as MatchCard[] };
+      }
+    } catch {
+      // Malformed JSON — still hide it
+    }
+  }
+
+  // Fence started but not yet complete — hide everything from the fence start
+  return { text: textBefore, matches: null };
 }
 
 // Extract plain text from UIMessage parts
