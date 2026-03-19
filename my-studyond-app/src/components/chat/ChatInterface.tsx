@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useAppStore } from '@/store/useAppStore';
 import type { MatchCard } from '@/types';
+import Markdown from 'react-markdown';
 
 // Parse AI response text to extract JSON match cards.
 // Also strips partial JSON fences during streaming — anything from ```json onwards
@@ -209,7 +210,9 @@ export function ChatInterface({ onMatchesReceived }: ChatInterfaceProps) {
                 {/* Message content */}
                 <div className={`flex flex-col gap-1 ${isUser ? 'items-end' : 'items-start'} max-w-[85%]`}>
                   <div className={isUser ? 'chat-bubble-user' : 'chat-bubble-ai'}>
-                    <p className="ds-body whitespace-pre-wrap">{text || rawText}</p>
+                    <p className="ds-body whitespace-pre-wrap">
+                      <Markdown>{text || rawText}</Markdown>
+                    </p>
                   </div>
                   {!isUser && matches && matches.length > 0 && (
                     <p className="ds-caption text-muted-foreground pl-1">

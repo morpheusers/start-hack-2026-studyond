@@ -8,6 +8,7 @@ import { useAppStore } from '@/store/useAppStore';
 import { getInitialsColor, getInitialsFromName } from '@/data/mockMatches';
 import { sendThreadMessage, generateThreadQuestions } from '@/api';
 import type { Thread, ThreadMessage } from '@/types';
+import Markdown from 'react-markdown';
 
 // Fallback questions derived from card context (used while AI-generated ones load)
 function getFallbackQuestions(thread: Thread): string[] {
@@ -204,7 +205,11 @@ export function ThreadChat({ thread }: ThreadChatProps) {
                   </Avatar>
                 )}
                 <div className={`max-w-[80%] ${isUser ? 'chat-bubble-user' : 'chat-bubble-ai'}`}>
-                  <p className="ds-body whitespace-pre-wrap">{message.content}</p>
+                  <p className="ds-body whitespace-pre-wrap">
+                    <Markdown>
+                      {message.content}
+                    </Markdown>
+                  </p>
                 </div>
               </motion.div>
             );

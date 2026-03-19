@@ -7,6 +7,7 @@ import { ThreadChat } from '@/components/thread/ThreadChat';
 import { CommitButton } from '@/components/thread/CommitButton';
 import { useAppStore } from '@/store/useAppStore';
 import { getInitialsColor, getInitialsFromName } from '@/data/mockMatches';
+import Markdown from 'react-markdown';
 
 function EntityTypeIcon({ type }: { type: string }) {
   if (type === 'field') return <Compass className="size-3.5" />;
@@ -128,7 +129,11 @@ export function ThreadPage() {
               <div className="size-1.5 rounded-full bg-gradient-to-r from-purple-500 to-blue-500" />
               <p className="ds-caption text-ai-solid font-medium">Why this matches you</p>
             </div>
-            <p className="ds-small text-muted-foreground leading-relaxed">{card.description}</p>
+            <p className="ds-small text-muted-foreground leading-relaxed">
+              <Markdown>
+                {card.description}
+              </Markdown>
+            </p>
           </div>
 
           {/* Tags */}

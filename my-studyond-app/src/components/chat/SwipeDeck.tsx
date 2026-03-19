@@ -160,7 +160,7 @@ export function SwipeDeck({ cards, onDeckEmpty }: SwipeDeckProps) {
   return (
     <div className="flex flex-col gap-6">
       {/* Card stack */}
-      <div className="relative" style={{ height: '520px' }}>
+      <div className="relative h-125">
         <AnimatePresence mode="popLayout">
           {visibleCards.map((card, stackIndex) => {
             const isTop = stackIndex === 0;

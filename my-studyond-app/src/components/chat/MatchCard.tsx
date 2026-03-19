@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import type { MatchCard as MatchCardType } from '@/types';
 import { getInitialsColor, getInitialsFromName } from '@/data/mockMatches';
 import { useAppStore } from '@/store/useAppStore';
+import Markdown from 'react-markdown';
 
 interface MatchCardProps {
   card: MatchCardType;
@@ -121,7 +122,11 @@ export function MatchCard({ card, isTop = false }: MatchCardProps) {
           <div className="size-1.5 rounded-full bg-gradient-to-r from-purple-500 to-blue-500" />
           <span className="ds-caption text-ai-solid font-medium">Why this matches you</span>
         </div>
-        <p className="ds-small text-foreground leading-relaxed">{card.description}</p>
+        <p className="ds-small text-foreground leading-relaxed">
+          <Markdown>
+            {card.description}
+          </Markdown>
+        </p>
       </div>
 
       {/* Tags */}
