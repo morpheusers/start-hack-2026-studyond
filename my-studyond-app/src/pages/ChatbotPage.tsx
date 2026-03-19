@@ -5,7 +5,7 @@ import { ChatInterface } from '@/components/chat/ChatInterface';
 import { SwipeDeck } from '@/components/chat/SwipeDeck';
 import { useAppStore } from '@/store/useAppStore';
 import type { MatchCard } from '@/types';
-import { MOCK_MATCH_CARDS } from '@/data/mockMatches';
+// import { MOCK_MATCH_CARDS } from '@/data/mockMatches';
 
 export function ChatbotPage() {
   const [matches, setMatches] = useState<MatchCard[]>([]);
