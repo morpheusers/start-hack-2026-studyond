@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Roadmap } from '@/components/home/Roadmap';
 import { ThreadInbox } from '@/components/home/ThreadInbox';
 import { useAppStore } from '@/store/useAppStore';
+import { RoadmapViewer } from '@/components/custom/roadmap/roadmap-viewer';
 
 export function HomePage() {
   const { profile, savedThreads, committedThreadId, roadmapSteps } = useAppStore();
@@ -64,7 +65,8 @@ export function HomePage() {
             )}
           </div>
           <div className="p-4 sm:p-6 bg-card border border-border rounded-xl">
-            <Roadmap />
+            {/* <Roadmap /> */}
+            <RoadmapViewer/>
           </div>
         </section>
 
