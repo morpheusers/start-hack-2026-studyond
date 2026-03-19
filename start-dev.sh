@@ -1,19 +1,6 @@
-#!/bin/bash
+#!/usr/env/bin bash
 # Studyond — Start Development Environment
 # Starts both the Express API server and Vite frontend in parallel
-
-# Check for .env file in backend
-if [ ! -f backend/.env ]; then
-  echo "⚠️  No backend/.env found. Creating with placeholder..."
-  echo "ANTHROPIC_API_KEY=your-key-here" > backend/.env
-  echo "PORT=3001" >> backend/.env
-  echo "Edit backend/.env and add your ANTHROPIC_API_KEY"
-fi
-
-# Load .env if available
-if [ -f backend/.env ]; then
-  export $(grep -v '^#' backend/.env | xargs)
-fi
 
 echo "Starting Studyond AI Thesis Journey..."
 echo ""
