@@ -1,8 +1,19 @@
-import { getSum } from "shared"
-import { getSub } from "shared/abcd";
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
 
-console.log(getSum(1, 2))
-console.log(getSub(1, 2));
+const app = express();
+const PORT = process.env.PORT ?? 3000;
 
+app.use(cors());
+app.use(express.json());
 
+app.get("/health", (_, res) => {
+    res.json({ status: "ok", timestamp: new Date().toISOString() });
+});
 
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
+
+export default app;
