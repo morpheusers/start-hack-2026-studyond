@@ -1,0 +1,72 @@
+languageCode = "en-us"
+title = "A Hugo theme for creating Reveal.js presentations"
+disableKinds = ["sitemap", "RSS"]
+theme = "reveal-hugo"
+publishDir = "build"
+# TODO: Insert repo name below here!
+baseURL = "https://nickolausen.github.io/web-presentation-template/"
+# Example: baseURL = "https://<github pages base url>/<repo name>/"
+
+# This forces Hugo to make all links relative to the current page
+relativeURLs = true
+canonifyURLs = true
+
+# uncomment for browsing at file:///
+# uglyURLs = true
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
+
+[author]
+name = "Nicholas Magi"
+
+# currently only the unsafe mode for goldmark is supported
+[markup.goldmark.renderer]
+unsafe = true
+
+# choose between Hugo compile-time or Highlight.js
+# syntax highlighting for code inside of code fences
+[markup.highlight]
+#codeFences = false  # use highlight.js
+codeFences = true  # use hugo highlighting at compile time
+style = "base16-snazzy"  # set a style for hugo highlighting
+# Code styles for Hugo: https://gohugo.io/quick-reference/syntax-highlighting-styles/ 
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true
+
+[outputFormats.Reveal]
+baseName = "index"
+mediaType = "text/html"
+isHTML = true
+
+[params.reveal_hugo]
+history = true
+slide_number = true
+transition = "slide"
+transition_speed = "fast"
+custom_theme = "custom-theme.scss"
+custom_theme_compile = true
+width = '1920'
+height = '1080'
+
+[params.reveal_hugo.custom_theme_options]
+targetPath = "css/custom-theme.css"
+enableSourceMap = true
+
+[[params.reveal_hugo.mermaid]]
+startOnLoad = true
+theme = "default"
+fontFamily = "Inconsolata"
+useMaxWidth = true
+
+# gitGraph options break the image generation
+# [params.reveal_hugo.mermaid.gitGraph]
+# mainBranchName = 'master'
+# rotateCommitLabel = true
+
+

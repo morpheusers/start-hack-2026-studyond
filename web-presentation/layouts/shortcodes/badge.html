@@ -1,0 +1,4 @@
+{{ $type := .Get "type" | default "primary"}}
+<span class="badge bg-{{ $type }}">
+    {{ .Inner }}
+</span>

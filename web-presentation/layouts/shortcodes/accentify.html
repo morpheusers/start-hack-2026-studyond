@@ -1,0 +1,4 @@
+{{- $position := .Get 0 | default "bottom-right" -}}
+<div style="max-width: fit-content; margin-inline: auto;" class="position-relative text-center accentify-{{- $position -}}">
+    {{ .Inner }}
+</div>

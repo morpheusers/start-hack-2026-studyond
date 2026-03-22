@@ -1,0 +1,26 @@
+{{- $type := .Get "type" | default "note" -}}
+{{- $content := .Inner -}}
+{{- $title := .Get "title" -}}
+{{- $source := .Get "src" -}}
+{{- $source_link := .Get "srcLink" -}}
+<div class="callout {{ $type }}">
+    <div class="callout-background py-4 px-5">
+        {{- if $title -}}
+            {{- if $content -}}
+            <div class="callout-title text-start">{{- $title -}}</div>
+            {{- else -}}
+            <div class="callout-title text-center">{{- $title -}}</div>
+            {{- end -}}
+        {{- end -}}
+        <div class="callout-content">{{- $content -}}</div>
+        {{- if or $source $source_link -}}
+        <div class="callout-footer d-flex justify-content-end my-3 fs-1">
+            {{- if and $source $source_link -}}
+            <small><a href="{{- $source_link -}}" target="_blank"><i class="fa-solid fa-link pe-2"></i>{{- $source -}}</a></small>
+            {{- else -}}
+            <small>{{- $source | default $source_link -}}</small>
+            {{- end -}}
+        </div>
+        {{- end -}}
+    </div>
+</div>

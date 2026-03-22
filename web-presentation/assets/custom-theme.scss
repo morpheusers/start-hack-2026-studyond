@@ -1,0 +1,201 @@
+@use "sass:color";
+
+@import "reveal-js/dist/theme/template/mixins";
+@import "reveal-js/dist/theme/template/settings";
+
+// Base settings for all themes that can optionally be
+// overridden by the super-theme
+
+// Fonts - consider using https://www.fonttrio.xyz/ for less effort
+
+// Headings
+@import url('https://fonts.googleapis.com/css2?family=Lustria&display=swap');
+// Body
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+// Monospace
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono');
+
+$mainFont: 'Inter', sans-serif;
+$headingFont: 'Lustria';
+$codeFont: 'JetBrains Mono';
+
+/* 
+	You may want a logo to be displayed 
+	on the bottom-left of the slides 
+*/
+$logo: url("../imgs/studyond.svg");
+
+$dark-theme: false !default;
+
+// DEFAULT COLORS: LIGHT MODE
+// Background of the presentation
+$backgroundColor: #fefefe;
+
+$mainFontSize: 40px;
+$mainColor: #000000;
+$accentClr: $mainColor;
+$codeClr: $accentClr;
+
+// Callouts styling
+$success: #28a745;
+$danger: #dc3545;
+$warning: #ffc107;
+$tip: #5a339e;
+$note: #17a2b8;
+$cite: rgb(134, 134, 134);
+
+// Colors used for UI elements that are overlaid on top of
+// the presentation
+$overlayElementBgColor: 240, 240, 240;
+$overlayElementFgColor: 0, 0, 0;
+
+// OVERRIDES COLORS IF DARK MODE SET TO TRUE
+@if $dark-theme {
+	// Background of the presentation
+	$backgroundColor: #000000;
+
+	$mainFontSize: 40px;
+	$mainColor: white;
+	$accentClr: #760000;
+
+	// Colors used for UI elements that are overlaid on top of
+	// the presentation
+	$overlayElementBgColor: 240, 240, 240;
+	$overlayElementFgColor: 0, 0, 0;
+}
+
+// Text selection
+$selectionBackgroundColor: #{$accentClr}77;
+$selectionColor: invert($backgroundColor);
+
+// Vertical spacing between blocks of text
+$blockMargin: 10px;
+
+// Headings
+$headingMargin: 30px 0;
+$headingLineHeight: 1;
+$headingColor: $mainColor;
+$headingLetterSpacing: normal;
+$headingTextTransform: normal;
+$headingTextShadow: none;
+$headingFontWeight: bold;
+$heading1TextShadow: $headingTextShadow;
+
+$heading1Size: 3.77em;
+$heading2Size: 2.11em;
+$heading3Size: 1.55em;
+$heading4Size: 1.00em;
+
+// Links and actions
+$linkColor: lighten($accentClr, 20%);
+$linkColorHover: lighten($linkColor, 20%);
+
+// Generates the presentation background, can be overridden
+// to return a background image or gradient
+@mixin bodyBackground() {
+	background: $backgroundColor;
+}
+
+@import "reveal-js/dist/theme/template/theme";
+@import "reveal-js/dist/theme/template/exposer";
+
+// Override **some** bootstrap default values
+ol, ul {
+  padding-left: 0rem !important;
+}
+
+.reveal [class*="primary"] {
+	--bs-primary: #{$accentClr};
+	--bs-primary-bg: #{$accentClr};
+	--bs-primary-rgb: #{red($accentClr)}, #{green($accentClr)}, #{blue($accentClr)};
+
+	// Buttons variable
+	--bs-btn-bg: #{$accentClr};
+	--bs-btn-border-color: #{$accentClr};
+	--bs-btn-color: #{fff};
+	--bs-btn-bg: #{$accentClr};
+	--bs-btn-border-color: #{$accentClr};
+	--bs-btn-hover-color: #{$backgroundColor};
+	--bs-btn-hover-bg: #{$accentClr};
+	--bs-btn-hover-border-color: #{$accentClr};
+	--bs-btn-focus-shadow-rgb: 49, 132, 253;
+	--bs-btn-active-color: #{$backgroundColor};
+	--bs-btn-active-bg: #{$accentClr};
+	--bs-btn-active-border-color: #{$accentClr};
+	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	--bs-btn-disabled-color: #{$backgroundColor};
+	--bs-btn-disabled-bg: #{$accentClr};
+	--bs-btn-disabled-border-color: #{$accentClr};
+	color: $backgroundColor !important;
+}
+
+.reveal .slide-background:not(.stack) {
+	background-color: transparent;
+	// Uncomment to add bottom right logo in every slide
+	background-image: $logo;
+	background-repeat: no-repeat;
+	background-position: 1.5% 97%;
+	background-size: 10%;
+	background-clip: border-box;
+
+	// Uncomment to add slides border
+	// border-style: solid;
+	// border-color: $accentClr;
+	// border-width: 0.3em;
+}
+
+.reveal .slide-background:not(:first-child, .stack):after {
+	content: "A. Ferri, N. Magi, L. M. Spitaleri, E. Ventura @ Start Hack 2026, St. Gallen";
+	position: absolute;
+	bottom: 4.5%;
+	right: 8%;
+	z-index: -1;
+	color: $accentClr;
+	font-size: .4em;
+	font-family: $mainFont;
+}
+
+.reveal strong,
+.reveal b {
+	font-weight: bolder;
+	color: $accentClr;
+}
+
+.reveal em {
+	font-style: italic;
+	color: $accentClr;
+}
+
+.reveal section img {
+	border: 0em;
+	box-shadow: none;
+	max-width: 100%;
+	max-height: 23em;
+	height: auto;
+	object-fit: contain;
+}
+
+.reveal code:not(.nohighlight) {
+	color: $codeClr;
+	font-family: $codeFont;
+	font-weight: bold;
+}
+
+.reveal .code-wrapper {
+	border-radius: 10px;
+	padding: 7px;
+	box-shadow: 2.5px 2.5px 10px rgba($mainColor, .3);
+}
+
+.reveal blockquote {
+	background-color: rgba($color: $accentClr, $alpha: .2);
+	border-radius: 20px;
+	border: 2px solid $accentClr;
+	box-shadow: 5px 5px 0px $accentClr;
+	transition: all 0.3s ease;
+}
+
+.reveal blockquote:hover {
+	// transition: all;
+	box-shadow: 0px 0px 20px $accentClr;
+}

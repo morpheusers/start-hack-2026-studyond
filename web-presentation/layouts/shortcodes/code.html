@@ -1,0 +1,33 @@
+{{- $here := $.Page.File | path.Dir -}}
+{{- $path := .Get "path" | default "config.toml" | printf "%s/%s" ($here) -}}
+{{- $fileContent := readFile $path -}}
+{{- $lines := split $fileContent "\n" -}}
+
+{{/* Range Logic */}}
+{{- $start := .Get "from" | default "1" | int | add -1 -}}
+{{- $to := .Get "to" | default (len $lines) | int -}}
+{{- $content := after $start $lines | first (sub $to $start) -}}
+
+{{/* Language Detection */}}
+{{- $highlight := .Get "highlight" | default "true" -}}
+{{- if eq $highlight "true" }}
+    {{- $language := .Get "language" | default (
+        cond (or (strings.HasSuffix $path ".kt") (strings.HasSuffix $path ".kts")) "kotlin" (
+            cond (strings.HasSuffix $path ".yml") "yaml" (
+                cond (strings.HasSuffix $path ".md") "markdown" (
+                    replaceRE "^.*\\.(\\w+)$" "$1" $path
+                )
+            )
+        )
+    ) }}
+
+<div class="custom-code-wrapper"></div>
+
+```{{- $language }} { linenos=inline }
+{{- range $content }}
+{{ . | safeHTML }}
+{{- end }}
+```
+{{- else }}
+{{ range $content }}{{ . | safeHTML }}{{ end }}
+{{- end -}}
