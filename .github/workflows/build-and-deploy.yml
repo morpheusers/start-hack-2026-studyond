@@ -39,10 +39,10 @@ jobs:
       - name: Build slides with hugo
         run: hugo
         working-directory: web-presentation
-      - name: Transform and Inline Mermaid charts
-        uses: cric96/inline-mermaid@1.19.0
-        with:
-          css-file-regex: '^css\\/.*custom.*theme.*\\.css$'
+    #   - name: Transform and Inline Mermaid charts
+    #     uses: cric96/inline-mermaid@1.19.0
+    #     with:
+    #       css-file-regex: '^css\\/.*custom.*theme.*\\.css$'
       - name: Get branch name
         id: branch-name
         uses: tj-actions/branch-names@v9
