@@ -144,14 +144,17 @@ ol, ul {
 	// border-width: 0.3em;
 }
 
-.reveal .slide-background:not(:first-child, .stack):after {
+/* Authors | Title of presentation */
+.reveal .navigate-left::before {
 	content: "A. Ferri, N. Magi, L. M. Spitaleri, E. Ventura @ Start Hack 2026, St. Gallen";
+	display: inline-block;
+	width: max-content;
 	position: absolute;
-	bottom: 4.5%;
-	right: 8%;
+	bottom: 10px;
+	right: 50px;
 	z-index: -1;
 	color: $accentClr;
-	font-size: .4em;
+	font-size: 2em;
 	font-family: $mainFont;
 }
 
